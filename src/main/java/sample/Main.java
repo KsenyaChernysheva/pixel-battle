@@ -1,38 +1,30 @@
 package sample;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.ColorPicker;
 import javafx.stage.Stage;
-import sample.controllers.MainController;
+import sample.server.WebSocketServer;
+
+import javax.websocket.DeploymentException;
 
 public class Main extends Application {
-    private Stage primaryStage;
-    private Parent root;
-    private MainController mainController;
-    private ColorPicker colorPicker;
+
+    private WebSocketServer server;
+
+    public void init() throws DeploymentException {
+        server = new WebSocketServer();
+        server.start();
+    }
+
+    public void stop() {
+        server.stop();
+    }
+
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("PixelBattle");
-
-        primaryStage.setResizable(false);
-        primaryStage.setMinHeight(1030);
-        primaryStage.setMaxHeight(1030);
-        primaryStage.setMinWidth(1000);
-        primaryStage.setMaxWidth(1000);
-
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Main.class.getResource("/views/sample.fxml"));
-        root = loader.load();
-        mainController = loader.getController();
-
-        Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        while (true) {
+            Thread.sleep(2000);
+        }
     }
 
     public static void main(String[] args) {
