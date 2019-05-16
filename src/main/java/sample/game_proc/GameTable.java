@@ -1,7 +1,5 @@
 package sample.game_proc;
 
-import javafx.scene.paint.Color;
-
 public class GameTable {
     private static GameTable instance;
 

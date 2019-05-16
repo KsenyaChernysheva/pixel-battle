@@ -3,8 +3,9 @@
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.layout.VBox?>
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1030.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.MainController">
+<VBox xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+      minWidth="-Infinity" prefHeight="1030.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.172-ea"
+      fx:controller="sample.controllers.MainViewController">
     <children>
       <ColorPicker fx:id="picker" prefHeight="30.0" prefWidth="130.0" />
         <Canvas fx:id="canvas" height="1000.0" width="1000.0" />
