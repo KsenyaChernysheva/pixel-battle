@@ -60,8 +60,14 @@ public class MainViewController implements MainView {
     private void drawPixel(int x, int y, Color color) {
         double pixelWidth = canvas.getWidth() / COUNT_PIXELS;
         double pixelHeight = canvas.getHeight() / COUNT_PIXELS;
-        getGraphicsContext().setFill(color.toPaintColor());
-        getGraphicsContext().setStroke(color.toPaintColor());
+        javafx.scene.paint.Color paintColor;
+        if (color != null) {
+            paintColor = color.toPaintColor();
+        } else {
+            paintColor = javafx.scene.paint.Color.WHITE;
+        }
+        getGraphicsContext().setFill(paintColor);
+        getGraphicsContext().setStroke(paintColor);
         canvas.getGraphicsContext2D().fillRect(x * pixelWidth,
                 y * pixelHeight,
                 pixelWidth, pixelHeight);

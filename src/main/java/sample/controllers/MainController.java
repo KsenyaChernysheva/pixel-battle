@@ -2,7 +2,7 @@ package sample.controllers;
 
 import org.glassfish.tyrus.client.ClientManager;
 import sample.client.WebSocketClientEndpoint;
-import sample.game_proc.GameTable;
+import sample.game_proc.Message;
 import sample.game_proc.Pixel;
 
 import javax.websocket.DeploymentException;
@@ -30,9 +30,12 @@ public class MainController {
     public void onViewCreated() {
         try {
             session = ClientManager.createClient().connectToServer(WebSocketClientEndpoint.class, new URI(SERVER_ADDRESS));
-            session.addMessageHandler((MessageHandler.Whole<Pixel>) message -> {
-                mainView.drawPixel(message);
-                GameTable.getInstance().table[message.getX()][message.getY()] = message.getColor();
+            session.addMessageHandler((MessageHandler.Whole<Message>) message -> {
+                if (message.getGameTable() != null) {
+                    mainView.drawAll(message.getGameTable());
+                } else if (message.getPixel() != null) {
+                    mainView.drawPixel(message.getPixel());
+                }
             });
         } catch (DeploymentException e) {
             e.printStackTrace();
@@ -46,7 +49,7 @@ public class MainController {
     public void onPixelClick(Pixel pixel) {
         if (session != null) {
             try {
-                session.getBasicRemote().sendObject(pixel);
+                session.getBasicRemote().sendObject(new Message(pixel));
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (EncodeException e) {

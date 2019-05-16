@@ -1,12 +1,12 @@
 package sample.client;
 
-import sample.utils.PixelDecoder;
-import sample.utils.PixelEncoder;
+import sample.utils.MessageDecoder;
+import sample.utils.MessageEncoder;
 
 import javax.websocket.ClientEndpoint;
 import javax.websocket.OnOpen;
 
-@ClientEndpoint(decoders = PixelDecoder.class, encoders = PixelEncoder.class)
+@ClientEndpoint(decoders = MessageDecoder.class, encoders = MessageEncoder.class)
 public class WebSocketClientEndpoint {
 
     @OnOpen

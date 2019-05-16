@@ -25,7 +25,6 @@ public class ClientMain extends Application {
         primaryStage.setMaxWidth(1000);
 
         FXMLLoader loader = new FXMLLoader();
-        // loader.setLocation(Main.class.getResource("/views/sample.fxml"));
         root = loader.load(getClass().getResourceAsStream("/views/sample.fxml"));
         mainViewController = loader.getController();
 

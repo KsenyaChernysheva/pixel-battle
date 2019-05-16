@@ -1,9 +1,9 @@
 package sample.server;
 
 import sample.game_proc.GameTable;
-import sample.game_proc.Pixel;
-import sample.utils.PixelDecoder;
-import sample.utils.PixelEncoder;
+import sample.game_proc.Message;
+import sample.utils.MessageDecoder;
+import sample.utils.MessageEncoder;
 
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
@@ -12,19 +12,19 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-@ServerEndpoint(value = "/hello", decoders = PixelDecoder.class, encoders = PixelEncoder.class)
+@ServerEndpoint(value = "/hello", decoders = MessageDecoder.class, encoders = MessageEncoder.class)
 public class WebSocketServerEndpoint {
     private static Set<Session> peers = Collections.synchronizedSet(new HashSet<Session>());
 
     @OnMessage
-    public void onMessage(Pixel pixel) {
-        GameTable.getInstance().table[pixel.getX()][pixel.getY()] = pixel.getColor();
-        System.out.println("server " + pixel);
+    public void onMessage(Message message) {
+        GameTable.getInstance().table[message.getPixel().getX()][message.getPixel().getY()] = message.getPixel().getColor();
+        System.out.println("server " + message);
 
         peers.forEach(peer -> {
             synchronized (peer) {
                 try {
-                    peer.getBasicRemote().sendObject(pixel);
+                    peer.getBasicRemote().sendObject(message);
                 } catch (IOException | EncodeException e) {
                     e.printStackTrace();
                 }
@@ -35,8 +35,8 @@ public class WebSocketServerEndpoint {
     @OnOpen
     public void onOpen(Session peer) throws IOException, EncodeException {
         peers.add(peer);
-        System.out.println("server connect");
-//        peer.getBasicRemote().sendObject(GameTable.getInstance());
+        //  System.out.println("server connect");
+        peer.getBasicRemote().sendObject(new Message(GameTable.getInstance()));
         //отправить при подключении
     }
 
